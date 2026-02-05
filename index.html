@@ -1,146 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>From My Heart 💗</title>
+<title>For My Favorite Person 💖</title>
 
 <style>
 body {
-  font-family: Arial;
-  background: #fff0f6;
-  padding: 20px;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.question {
+
+.container {
+  background: white;
+  width: 90%;
+  max-width: 420px;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.95);}
+  to {opacity: 1; transform: scale(1);}
+}
+
+h2 {
+  text-align: center;
+  color: #ff4d6d;
+}
+
+p.sub {
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+}
+
+.option {
+  background: #fff0f5;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #ffe3ed;
+}
+
+textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 8px;
   display: none;
 }
-.question.active {
-  display: block;
-}
+
 button {
+  width: 100%;
   margin-top: 15px;
-  padding: 10px 22px;
+  padding: 12px;
   background: #ff4d6d;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 16px;
+  cursor: pointer;
 }
-textarea {
-  width: 100%;
-  margin-top: 8px;
-  padding: 8px;
+
+button:hover {
+  background: #ff335a;
+}
+
+.heart {
+  text-align: center;
+  font-size: 30px;
+  animation: beat 1s infinite;
+}
+
+@keyframes beat {
+  0%,100% {transform: scale(1);}
+  50% {transform: scale(1.2);}
+}
+
+a.sheet {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  text-decoration: none;
+  background: #ffe3ed;
+  padding: 10px;
+  border-radius: 10px;
+  color: #ff4d6d;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<h2>Just a few honest questions 💕</h2>
-
-<form id="form">
-
-<!-- Question Template -->
-<div class="question active">
-<p>1. When you see my name on your phone, what do you usually feel first?</p>
-<label><input type="radio" name="q1" value="A warm smile"> A warm smile</label><br>
-<label><input type="radio" name="q1" value="Calm & comfort"> Calm & comfort</label><br>
-<label><input type="radio" name="q1" value="Curiosity"> Curiosity</label><br>
-<label><input type="radio" name="q1" value="Happiness"> Happiness</label><br>
-<label>
-<input type="radio" name="q1" value="Other"> Other
-<textarea placeholder="Write here..."></textarea>
-</label><br>
-<button type="button" onclick="next(0)">Next</button>
+<div class="container">
+  <div class="heart">💖</div>
+  <h2 id="question"></h2>
+  <p class="sub">Answer from your heart… I’m listening 🫶</p>
+  <div id="options"></div>
+  <textarea id="otherText" placeholder="Write your feelings here… 💬"></textarea>
+  <button onclick="nextQuestion()">Next 💕</button>
 </div>
-
-<div class="question">
-<p>2. What place do I hold in your life right now?</p>
-<label><input type="radio" name="q2" value="Emotionally close"> Someone emotionally close</label><br>
-<label><input type="radio" name="q2" value="Trusted person"> A person I trust deeply</label><br>
-<label><input type="radio" name="q2" value="Special friend"> A special friend</label><br>
-<label><input type="radio" name="q2" value="Someone who matters silently"> Someone who matters silently</label><br>
-<label>
-<input type="radio" name="q2" value="Other"> Other
-<textarea></textarea>
-</label><br>
-<button type="button" onclick="next(1)">Next</button>
-</div>
-
-<div class="question">
-<p>3. Do you feel understood when you talk to me?</p>
-<label><input type="radio" name="q3" value="Yes, completely"> Yes, completely</label><br>
-<label><input type="radio" name="q3" value="Mostly"> Mostly</label><br>
-<label><input type="radio" name="q3" value="Sometimes"> Sometimes</label><br>
-<label><input type="radio" name="q3" value="Not sure yet"> Not sure yet</label><br>
-<label>
-<input type="radio" name="q3" value="Other"> Other
-<textarea></textarea>
-</label><br>
-<button type="button" onclick="next(2)">Next</button>
-</div>
-
-<div class="question">
-<p>4. What do you value most about our connection?</p>
-<label><input type="radio" name="q4" value="Emotional safety"> Emotional safety</label><br>
-<label><input type="radio" name="q4" value="Honest conversations"> Honest conversations</label><br>
-<label><input type="radio" name="q4" value="Your effort"> The effort you feel from me</label><br>
-<label><input type="radio" name="q4" value="My presence"> My presence</label><br>
-<label>
-<input type="radio" name="q4" value="Other"> Other
-<textarea></textarea>
-</label><br>
-<button type="button" onclick="next(3)">Next</button>
-</div>
-
-<div class="question">
-<p>5. If there’s one feeling you’ve never said out loud to me, what is it closest to?</p>
-<label><input type="radio" name="q5" value="Affection"> Affection</label><br>
-<label><input type="radio" name="q5" value="Gratitude"> Gratitude</label><br>
-<label><input type="radio" name="q5" value="Care"> Care</label><br>
-<label><input type="radio" name="q5" value="Confusion"> Confusion</label><br>
-<label>
-<input type="radio" name="q5" value="Other"> Other
-<textarea></textarea>
-</label><br>
-<button type="submit">Submit</button>
-</div>
-
-</form>
 
 <script>
-const qs = document.querySelectorAll(".question");
+const sheetLink = "https://script.google.com/macros/s/AKfycbw3pY7MJ3bDDoh8O-d50wAYFTY_xrLnQbduNy7yHhI8IYcxOl3nPka77_yKY3lpOpMJWA/exec";
 
-function next(i) {
-  const selected = qs[i].querySelector("input[type=radio]:checked");
-  if (!selected) {
-    alert("Please answer before continuing 💗");
-    return;
+const questions = [
+  {
+    q: "What makes your heart feel lighter when you’re sad? 🥺",
+    o: ["Your smile 😄","A warm hug 🤗","Late night talks 🌙","Our memories 💭","Other 💬"]
+  },
+  {
+    q: "When you’re low, what do you need from me the most? 💞",
+    o: ["Just listen 👂","Hold me 🤝","Make me laugh 😂","Stay with me 🫶","Other 💬"]
+  },
+  {
+    q: "What do you love most about us? 💑",
+    o: ["Understanding 💖","Silly moments 😜","Deep talks 🥺","Care 🥰","Other 💬"]
+  },
+  {
+    q: "Right now, what would make you smile instantly? 😊",
+    o: ["A hug 🤍","Sweet words 💌","A surprise 🎁","Your presence 😌","Other 💬"]
+  },
+  {
+    q: "One thing you want me to never forget about you 💭",
+    o: ["I’m sensitive 💗","I feel deeply 🌊","I love honestly ❤️","I need reassurance 🫂","Other 💬"]
   }
-  qs[i].classList.remove("active");
-  qs[i+1].classList.add("active");
+];
+
+let index = 0;
+
+function loadQuestion() {
+  document.getElementById("question").innerText = questions[index].q;
+  const opt = document.getElementById("options");
+  opt.innerHTML = "";
+  document.getElementById("otherText").style.display = "none";
+
+  questions[index].o.forEach(o => {
+    opt.innerHTML += `
+      <div class="option">
+        <input type="radio" name="ans" onclick="checkOther('${o}')"> ${o}
+      </div>`;
+  });
 }
 
-document.getElementById("form").addEventListener("submit", e => {
-  e.preventDefault();
-  const data = {};
-  for (let i = 1; i <= 5; i++) {
-    const sel = document.querySelector(`input[name=q${i}]:checked`);
-    data[`q${i}`] = sel.value === "Other"
-      ? sel.nextElementSibling.value
-      : sel.value;
+function checkOther(val) {
+  document.getElementById("otherText").style.display =
+    val.includes("Other") ? "block" : "none";
+}
+
+function nextQuestion() {
+  const selected = document.querySelector('input[name="ans"]:checked');
+  if (!selected) {
+    alert("Choose one option, my favorite person 💖");
+    return;
   }
 
-  fetch("https://script.google.com/macros/s/AKfycbw3pY7MJ3bDDoh8O-d50wAYFTY_xrLnQbduNy7yHhI8IYcxOl3nPka77_yKY3lpOpMJWA/exec", {
-    method: "POST",
-    body: JSON.stringify(data)
-  }).then(() => {
+  index++;
+  if (index < questions.length) {
+    loadQuestion();
+  } else {
     document.body.innerHTML = `
-      <h2>Thank you for answering honestly 💕</h2>
-      <img src="https://media.giphy.com/media/gnXG2hODaCOru/giphy.gif" width="250">
-      <p>Your words mean a lot to me.</p>
-    `;
-  });
-});
+      <div class="container">
+        <div class="heart">💖</div>
+        <h2>Thank You,💞</h2>
+        <p style="text-align:center;">
+          If you’re smiling even a little right now,  
+          then this meant everything to me 🫂❤️  
+          I’m always here… listening, loving, choosing you.
+        </p>
+        <a class="sheet" href="${sheetLink}" target="_blank">
+          View Your Answers 📄💗
+        </a>
+      </div>`;
+  }
+}
+
+loadQuestion();
 </script>
 
 </body>
