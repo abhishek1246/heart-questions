@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For My Favorite Person 💖</title>
+<title>For You 💖</title>
 
 <style>
 body {
@@ -22,12 +22,6 @@ body {
   padding: 25px;
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-  animation: fadeIn 1s ease;
-}
-
-@keyframes fadeIn {
-  from {opacity: 0; transform: scale(0.95);}
-  to {opacity: 1; transform: scale(1);}
 }
 
 h2 {
@@ -46,11 +40,6 @@ p.sub {
   padding: 10px;
   margin: 8px 0;
   border-radius: 10px;
-  cursor: pointer;
-}
-
-.option:hover {
-  background: #ffe3ed;
 }
 
 textarea {
@@ -70,11 +59,6 @@ button {
   border: none;
   border-radius: 10px;
   font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #ff335a;
 }
 
 .heart {
@@ -87,18 +71,6 @@ button:hover {
   0%,100% {transform: scale(1);}
   50% {transform: scale(1.2);}
 }
-
-a.sheet {
-  display: block;
-  text-align: center;
-  margin-top: 15px;
-  text-decoration: none;
-  background: #ffe3ed;
-  padding: 10px;
-  border-radius: 10px;
-  color: #ff4d6d;
-  font-weight: bold;
-}
 </style>
 </head>
 
@@ -107,22 +79,24 @@ a.sheet {
 <div class="container">
   <div class="heart">💖</div>
   <h2 id="question"></h2>
-  <p class="sub">Answer from your heart… I’m listening 🫶</p>
+  <p class="sub">Answer honestly… I’m listening 🫶</p>
   <div id="options"></div>
-  <textarea id="otherText" placeholder="Write your feelings here… 💬"></textarea>
+  <textarea id="otherText" placeholder="Write your feelings here 💬"></textarea>
   <button onclick="nextQuestion()">Next 💕</button>
 </div>
 
 <script>
-const sheetLink = "https://script.google.com/macros/s/AKfycbxNWOHNyt_Ja_VCNWjCC-7pRksx2vsqtZ254zIRwlAYhHzUChQ6Hwl7C1gGqBLPXHXJHQ/exec";
+/* 🔴🔴🔴 PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE 🔴🔴🔴 */
+const scriptURL = "https://script.google.com/macros/s/AKfycbxDd-5gjKdU2mApq4LLwL0kgmH8LsMEHvBNuhES7sXPjKuV0nfzVdtsTKKYmaS9PjsbPg/exec";
 
+/* QUESTIONS */
 const questions = [
   {
     q: "What makes your heart feel lighter when you’re sad? 🥺",
     o: ["Your smile 😄","A warm hug 🤗","Late night talks 🌙","Our memories 💭","Other 💬"]
   },
   {
-    q: "When you’re low, what do you need from me the most? 💞",
+    q: "When you’re low, what do you need from me most? 💞",
     o: ["Just listen 👂","Hold me 🤝","Make me laugh 😂","Stay with me 🫶","Other 💬"]
   },
   {
@@ -140,6 +114,8 @@ const questions = [
 ];
 
 let index = 0;
+let answers = [];
+let otherTexts = [];
 
 function loadQuestion() {
   document.getElementById("question").innerText = questions[index].q;
@@ -150,7 +126,8 @@ function loadQuestion() {
   questions[index].o.forEach(o => {
     opt.innerHTML += `
       <div class="option">
-        <input type="radio" name="ans" onclick="checkOther('${o}')"> ${o}
+        <input type="radio" name="ans" value="${o}" onclick="checkOther('${o}')">
+        ${o}
       </div>`;
   });
 }
@@ -163,28 +140,46 @@ function checkOther(val) {
 function nextQuestion() {
   const selected = document.querySelector('input[name="ans"]:checked');
   if (!selected) {
-    alert("Choose one option, my favorite person 💖");
+    alert("Please choose one option 💖");
     return;
   }
 
+  answers[index] = selected.value;
+  otherTexts[index] = document.getElementById("otherText").value || "";
+
   index++;
+
   if (index < questions.length) {
     loadQuestion();
   } else {
-    document.body.innerHTML = `
-      <div class="container">
-        <div class="heart">💖</div>
-        <h2>Thank You,💞</h2>
-        <p style="text-align:center;">
-          If you’re smiling even a little right now,  
-          then this meant everything to me 🫂❤️  
-          I’m always here… listening, loving, choosing you.
-        </p>
-        <a class="sheet" href="${sheetLink}" target="_blank">
-          View Your Answers 📄💗
-        </a>
-      </div>`;
+    sendToSheet();
   }
+}
+
+function sendToSheet() {
+  const payload = {
+    q1: answers[0],
+    q2: answers[1],
+    q3: answers[2],
+    q4: answers[3],
+    q5: answers[4],
+    other: otherTexts.join(" | ")
+  };
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  });
+
+  document.body.innerHTML = `
+    <div class="container">
+      <div class="heart">💖</div>
+      <h2>Thank You, My Love 💞</h2>
+      <p style="text-align:center;">
+        Your feelings matter to me more than anything.  
+        If you’re smiling even a little, this was worth it 🫂❤️
+      </p>
+    </div>`;
 }
 
 loadQuestion();
@@ -192,4 +187,3 @@ loadQuestion();
 
 </body>
 </html>
-
